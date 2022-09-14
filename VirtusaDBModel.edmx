@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VirtusaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Customerid" />
+          </Key>
+          <Property Name="Customerid" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="contactName" Type="char" MaxLength="30" />
+          <Property Name="Address" Type="varchar" MaxLength="60" />
+          <Property Name="Town" Type="char" MaxLength="15" />
+          <Property Name="Phone" Type="char" MaxLength="24" />
+          <Property Name="Fax" Type="char" MaxLength="24" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VirtusaDB.dbo.Department' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Dept_no" />
+            
+            
+          </Key>
+          <Property Name="Dept_no" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VirtusaDB.dbo.Employee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="emp" />
+            <PropertyRef Name="emp_fname" />
+            <PropertyRef Name="emp_lname" />
+            <PropertyRef Name="dept" />
+          </Key>
+          <Property Name="emp" Type="int" Nullable="false" />
+          <Property Name="emp_fname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="emp_lname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="dept" Type="char" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VirtusaDB.dbo.Orders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="customerId" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="Orderdate" Type="datetime" />
+          <Property Name="Shippeddate" Type="datetime" />
+          <Property Name="Freight" Type="money" />
+          <Property Name="Shipname" Type="varchar" MaxLength="40" />
+          <Property Name="Shipaddres" Type="varchar" MaxLength="60" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VirtusaDB.dbo.Project' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="project_name" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="project_no" />
+          </Key>
+          <Property Name="project_name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Budget" Type="int" Nullable="false" />
+          <Property Name="project_no" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STUDENTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="AGE" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VirtusaDB.dbo.Works_on' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Works_on">
+          <Key>
+            <PropertyRef Name="emp_no" />
+            <PropertyRef Name="project_no" />
+            <PropertyRef Name="Job" />
+            <PropertyRef Name="enter_date" />
+          </Key>
+          <Property Name="emp_no" Type="int" Nullable="false" />
+          <Property Name="project_no" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Job" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="enter_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="VirtusaDBModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Department].[Dept_no] AS [Dept_no], 
+    [Department].[DeptName] AS [DeptName], 
+    [Department].[location] AS [location]
+    FROM [dbo].[Department] AS [Department]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Employee" EntityType="Self.Employee" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Employee].[emp] AS [emp], 
+    [Employee].[emp_fname] AS [emp_fname], 
+    [Employee].[emp_lname] AS [emp_lname], 
+    [Employee].[dept] AS [dept]
+    FROM [dbo].[Employee] AS [Employee]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Orders" EntityType="Self.Orders" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Orders].[OrderId] AS [OrderId], 
+    [Orders].[customerId] AS [customerId], 
+    [Orders].[Orderdate] AS [Orderdate], 
+    [Orders].[Shippeddate] AS [Shippeddate], 
+    [Orders].[Freight] AS [Freight], 
+    [Orders].[Shipname] AS [Shipname], 
+    [Orders].[Shipaddres] AS [Shipaddres], 
+    [Orders].[Quantity] AS [Quantity]
+    FROM [dbo].[Orders] AS [Orders]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Project" EntityType="Self.Project" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Project].[project_name] AS [project_name], 
+    [Project].[Budget] AS [Budget], 
+    [Project].[project_no] AS [project_no]
+    FROM [dbo].[Project] AS [Project]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Works_on" EntityType="Self.Works_on" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Works_on].[emp_no] AS [emp_no], 
+    [Works_on].[project_no] AS [project_no], 
+    [Works_on].[Job] AS [Job], 
+    [Works_on].[enter_date] AS [enter_date]
+    FROM [dbo].[Works_on] AS [Works_on]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VirtusaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="AGE" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Customerid" />
+          </Key>
+          <Property Name="Customerid" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contactName" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Town" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="24" FixedLength="true" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="24" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Dept_no" />
+          </Key>
+          <Property Name="Dept_no" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DeptName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="emp" />
+            <PropertyRef Name="emp_fname" />
+            <PropertyRef Name="emp_lname" />
+            <PropertyRef Name="dept" />
+          </Key>
+          <Property Name="emp" Type="Int32" Nullable="false" />
+          <Property Name="emp_fname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_lname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dept" Type="String" MaxLength="60" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="customerId" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Orderdate" Type="DateTime" Precision="3" />
+          <Property Name="Shippeddate" Type="DateTime" Precision="3" />
+          <Property Name="Freight" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Shipname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Shipaddres" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="project_name" />
+            <PropertyRef Name="Budget" />
+            <PropertyRef Name="project_no" />
+          </Key>
+          <Property Name="project_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Budget" Type="Int32" Nullable="false" />
+          <Property Name="project_no" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Works_on">
+          <Key>
+            <PropertyRef Name="emp_no" />
+            <PropertyRef Name="project_no" />
+            <PropertyRef Name="Job" />
+            <PropertyRef Name="enter_date" />
+          </Key>
+          <Property Name="emp_no" Type="Int32" Nullable="false" />
+          <Property Name="project_no" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Job" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="enter_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="VirtusaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENT" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Works_on" EntityType="Self.Works_on" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VirtusaDBModelStoreContainer" CdmEntityContainer="VirtusaDBEntities">
+          <EntitySetMapping Name="STUDENTS">
+            <EntityTypeMapping TypeName="VirtusaDBModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="AGE" ColumnName="AGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VirtusaDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Customerid" ColumnName="Customerid" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="contactName" ColumnName="contactName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Dept_no" ColumnName="Dept_no" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="emp" ColumnName="emp" />
+                <ScalarProperty Name="emp_fname" ColumnName="emp_fname" />
+                <ScalarProperty Name="emp_lname" ColumnName="emp_lname" />
+                <ScalarProperty Name="dept" ColumnName="dept" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="Orderdate" ColumnName="Orderdate" />
+                <ScalarProperty Name="Shippeddate" ColumnName="Shippeddate" />
+                <ScalarProperty Name="Freight" ColumnName="Freight" />
+                <ScalarProperty Name="Shipname" ColumnName="Shipname" />
+                <ScalarProperty Name="Shipaddres" ColumnName="Shipaddres" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="project_no" ColumnName="project_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Works_on">
+            <EntityTypeMapping TypeName="VirtusaDBModel.Works_on">
+              <MappingFragment StoreEntitySet="Works_on">
+                <ScalarProperty Name="emp_no" ColumnName="emp_no" />
+                <ScalarProperty Name="project_no" ColumnName="project_no" />
+                <ScalarProperty Name="Job" ColumnName="Job" />
+                <ScalarProperty Name="enter_date" ColumnName="enter_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
